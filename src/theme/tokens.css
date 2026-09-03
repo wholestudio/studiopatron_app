@@ -1,0 +1,18 @@
+:root {
+  --paper: #f4efe8;
+  --paper-elevated: #fbf8f4;
+  --ink: #1f1b16;
+  --ink-muted: #5c564e;
+  --stone: #8a8178;
+  --linen: #e4ddd4;
+  --bronze: #9a6242;
+  --bronze-hover: #824f34;
+  --sage: #4f5d50;
+  --danger: #8f2d2d;
+
+  --radius-token-sm: 0.25rem;
+  --radius-token-md: 0.5rem;
+  --radius-token-lg: 0.75rem;
+
+  --shadow-soft: 0 8px 24px rgb(31 27 22 / 0.08);
+}

@@ -1,0 +1,21 @@
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-elevated: var(--paper-elevated);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-stone: var(--stone);
+  --color-linen: var(--linen);
+  --color-bronze: var(--bronze);
+  --color-bronze-hover: var(--bronze-hover);
+  --color-sage: var(--sage);
+  --color-danger: var(--danger);
+
+  --font-sans: var(--font-figtree);
+  --font-display: var(--font-newsreader);
+
+  --radius-sm: var(--radius-token-sm);
+  --radius-md: var(--radius-token-md);
+  --radius-lg: var(--radius-token-lg);
+
+  --shadow-soft: var(--shadow-soft);
+}
