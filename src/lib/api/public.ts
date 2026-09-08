@@ -1,4 +1,4 @@
-import { apiRequest } from "@/lib/api/request";
+import { apiRequest } from "@/lib/api/httpClient";
 import type { ApiRequestOptions } from "@/types/api";
 
 const publicDefaults: Pick<ApiRequestOptions, "cache" | "next"> = {

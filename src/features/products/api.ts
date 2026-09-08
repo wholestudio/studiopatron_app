@@ -1,3 +1,7 @@
+/**
+ * Transport only. DTO: Product / PaginatedResponse from @/types.
+ * Call via services — not from UI or hooks.
+ */
 import { endpoints } from "@/lib/api/endpoints";
 import { publicApi } from "@/lib/api/public";
 import type { ListQuery, PaginatedResponse } from "@/types/api";

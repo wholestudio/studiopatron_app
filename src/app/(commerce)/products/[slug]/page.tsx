@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { DetailPageShell } from "@/components/layout/detail-page-shell";
+import { pages } from "@/config/page-registry";
 import { routes } from "@/constants/routes";
+import { getProductDetailPage, ProductDetailView } from "@/features/products";
 import { createPageMetadata, productJsonLd } from "@/lib/seo";
 
 type ProductDetailPageProps = {
@@ -10,9 +13,12 @@ type ProductDetailPageProps = {
 
 export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const model = await getProductDetailPage(slug);
+  const title = model.product?.title ?? "Product";
 
   return createPageMetadata({
-    title: "Product",
+    title,
+    description: model.product?.excerpt,
     path: routes.product(slug),
     type: "product",
   });
@@ -20,19 +26,35 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = await params;
+  const model = await getProductDetailPage(slug);
+
+  if (model.status === "not_found") {
+    notFound();
+  }
+
+  const title = model.product?.title ?? "Product";
+  const description =
+    model.product?.excerpt ??
+    "Product details, media, and purchase actions load from the catalog API.";
 
   return (
     <DetailPageShell
-      title="Product"
-      description="Product details, media, and purchase actions will load from the catalog API for this record."
+      title={title}
+      description={description}
       breadcrumbs={[
-        { name: "Home", path: routes.home },
-        { name: "Products", path: routes.products },
-        { name: "Product", path: routes.product(slug) },
+        { name: "Home", path: pages.home.path },
+        { name: "Products", path: pages.products.path },
+        { name: title, path: routes.product(slug) },
       ]}
       emptyTitle="Product unavailable"
       emptyDescription="This page is prepared for catalog data. No product record is loaded yet."
-      jsonLd={productJsonLd({ name: "Product" })}
-    />
+      jsonLd={productJsonLd({
+        name: title,
+        description: model.product?.excerpt,
+        sku: model.product?.sku,
+      })}
+    >
+      <ProductDetailView model={model} />
+    </DetailPageShell>
   );
 }
