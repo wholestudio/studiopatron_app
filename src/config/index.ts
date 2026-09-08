@@ -10,3 +10,5 @@ export {
 } from "./navigation";
 export type { NavItem } from "./navigation";
 export { imageQuality, imageSizes } from "./images";
+export { getPage, getPageById, pages } from "./page-registry";
+export type { PageDefinition, PageId, PageKey, PageType } from "./page-registry";

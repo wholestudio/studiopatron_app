@@ -1,25 +1,32 @@
 import type { Metadata } from "next";
 
 import { CatalogPage } from "@/components/layout/catalog-page";
-import { routes } from "@/constants/routes";
+import { pages } from "@/config/page-registry";
+import { getProductListPage, ProductCatalog } from "@/features/products";
 import { createPageMetadata } from "@/lib/seo";
+
+const productsPage = pages.products;
 
 export const metadata: Metadata = createPageMetadata({
   title: "Products",
-  path: routes.products,
+  path: productsPage.path,
 });
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const model = await getProductListPage();
+
   return (
     <CatalogPage
       title="Products"
-      description="Catalog products will appear here from the public products API."
+      description="Browse published catalog products from the Studio Patron public API."
       breadcrumbs={[
-        { name: "Home", path: routes.home },
-        { name: "Products", path: routes.products },
+        { name: "Home", path: pages.home.path },
+        { name: "Products", path: productsPage.path },
       ]}
       emptyTitle="Products"
       emptyDescription="No products have been published yet."
-    />
+    >
+      <ProductCatalog model={model} />
+    </CatalogPage>
   );
 }
