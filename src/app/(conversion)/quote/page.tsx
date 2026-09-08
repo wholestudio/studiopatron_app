@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { QuoteShell } from "@/components/quote";
-import { CatalogPage } from "@/components/layout/catalog-page";
-import { routes } from "@/constants/routes";
-import { createPageMetadata } from "@/lib/seo";
+import { QuoteShell } from "@/shared/components/quote";
+import { CatalogPage } from "@/shared/components/layout/catalog-page";
+import { routes } from "@/shared/constants/routes";
+import { createPageMetadata } from "@/infra/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Request a quote",

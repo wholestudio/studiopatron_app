@@ -1,5 +1,5 @@
-import { ProductCard } from "@/components/product";
-import { EmptyState } from "@/components/ui/empty-state";
+import { ProductCard } from "@/shared/components/cards";
+import { EmptyState } from "@/shared/components/ui/empty-state";
 
 import type { ProductListPageModel } from "../types";
 

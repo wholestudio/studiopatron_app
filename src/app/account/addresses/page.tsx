@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { PageHeader } from "@/components/layout/page-header";
-import { EmptyState } from "@/components/ui/empty-state";
-import { routes } from "@/constants/routes";
-import { createPageMetadata } from "@/lib/seo";
+import { PageHeader } from "@/shared/components/layout/page-header";
+import { EmptyState } from "@/shared/components/ui/empty-state";
+import { routes } from "@/shared/constants/routes";
+import { createPageMetadata } from "@/infra/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Addresses",

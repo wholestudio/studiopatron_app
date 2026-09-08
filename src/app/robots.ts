@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getSiteUrl } from "@/config/env";
+import { getSiteUrl } from "@/infra/config/env";
 
 export default function robots(): MetadataRoute.Robots {
   const siteUrl = getSiteUrl();

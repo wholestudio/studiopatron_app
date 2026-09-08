@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
-import { Hero } from "@/components/hero";
-import { CtaSection, Section } from "@/components/sections";
-import { ContentPlaceholder } from "@/components/sections/content-placeholder";
-import { Container } from "@/components/ui/container";
-import { routes } from "@/constants/routes";
-import { createPageMetadata } from "@/lib/seo";
+import { Hero } from "@/shared/components/hero";
+import { CtaSection, Section } from "@/shared/components/sections";
+import { ContentPlaceholder } from "@/shared/components/sections/content-placeholder";
+import { Container } from "@/shared/components/ui/container";
+import { routes } from "@/shared/constants/routes";
+import { createPageMetadata } from "@/infra/seo";
 
 export const metadata: Metadata = createPageMetadata({
   path: routes.home,

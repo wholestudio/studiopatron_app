@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { Figtree, Newsreader } from "next/font/google";
 import type { ReactNode } from "react";
 
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
-import { Main } from "@/components/layout/main";
-import { SkipLink } from "@/components/layout/skip-link";
-import { AppProviders } from "@/components/providers/app-providers";
-import { getSiteUrl } from "@/config/env";
-import { siteConfig } from "@/config/site";
-import { JsonLdScript, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
+import { Footer } from "@/shared/components/footer";
+import { Header } from "@/shared/components/header";
+import { Main } from "@/shared/components/layout/main";
+import { SkipLink } from "@/shared/components/layout/skip-link";
+import { AppProviders } from "@/shared/components/providers/app-providers";
+import { getSiteUrl } from "@/infra/config/env";
+import { siteConfig } from "@/infra/config/site";
+import { JsonLdScript, organizationJsonLd, websiteJsonLd } from "@/infra/seo";
 
 import "./globals.css";
 

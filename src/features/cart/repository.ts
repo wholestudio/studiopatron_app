@@ -1,4 +1,4 @@
-import type { CartSnapshot } from "@/types/commerce";
+import type { CartSnapshot } from "@/shared/types/commerce";
 
 export type CartRepository = {
   get(): Promise<CartSnapshot>;

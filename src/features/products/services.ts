@@ -1,5 +1,5 @@
-import { ApiConfigError, isApiError } from "@/lib/api/errors";
-import type { ListQuery } from "@/types/api";
+import { ApiConfigError, isApiError } from "@/infra/api/errors";
+import type { ListQuery } from "@/shared/types/api";
 
 import { getProductBySlug, getProducts } from "./api";
 import type { ProductDetailPageModel, ProductListPageModel } from "./types";

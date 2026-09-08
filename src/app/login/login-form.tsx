@@ -2,9 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Form, FormActions, FormField } from "@/components/forms";
-import { Button } from "@/components/ui/button";
-import { loginSchema, type LoginInput } from "@/lib/validation/auth";
+import { Form, FormActions, FormField } from "@/shared/components/forms";
+import { Button } from "@/shared/components/ui/button";
+import { loginSchema, type LoginInput } from "@/infra/validation/auth";
 
 export function LoginForm() {
   async function onSubmit() {

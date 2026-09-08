@@ -1,7 +1,7 @@
-import { endpoints } from "@/lib/api/endpoints";
-import { publicApi } from "@/lib/api/public";
-import type { ListQuery, PaginatedResponse } from "@/types/api";
-import type { Service } from "@/types/content";
+import { endpoints } from "@/infra/api/endpoints";
+import { publicApi } from "@/infra/api/publicApi";
+import type { ListQuery, PaginatedResponse } from "@/shared/types/api";
+import type { Service } from "@/shared/types/content";
 
 export function getServices(query?: ListQuery) {
   return publicApi.get<PaginatedResponse<Service>>(endpoints.public.services, { query });

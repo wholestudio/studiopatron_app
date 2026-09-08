@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
-import { DetailPageShell } from "@/components/layout/detail-page-shell";
-import { routes } from "@/constants/routes";
-import { createPageMetadata } from "@/lib/seo";
+import { DetailPageShell } from "@/shared/components/layout/detail-page-shell";
+import { routes } from "@/shared/constants/routes";
+import { createPageMetadata } from "@/infra/seo";
 
 type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;

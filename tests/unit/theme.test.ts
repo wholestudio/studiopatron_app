@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { colors, fonts, radii } from "@/theme";
+import { colors, fonts, radii } from "@/shared/theme";
 
 describe("theme tokens", () => {
   it("exposes the brand color set", () => {

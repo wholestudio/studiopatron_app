@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { DetailPageShell } from "@/components/layout/detail-page-shell";
-import { pages } from "@/config/page-registry";
-import { routes } from "@/constants/routes";
+import { DetailPageShell } from "@/shared/components/layout/detail-page-shell";
+import { pages } from "@/infra/config/page-registry";
+import { routes } from "@/shared/constants/routes";
 import { getProductDetailPage, ProductDetailView } from "@/features/products";
-import { createPageMetadata, productJsonLd } from "@/lib/seo";
+import { createPageMetadata, productJsonLd } from "@/infra/seo";
 
 type ProductDetailPageProps = {
   params: Promise<{ slug: string }>;

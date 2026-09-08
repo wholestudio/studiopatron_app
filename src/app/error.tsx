@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-import { routes } from "@/constants/routes";
+import { Button } from "@/shared/components/ui/button";
+import { routes } from "@/shared/constants/routes";
 
 type AppErrorProps = {
   error: globalThis.Error & { digest?: string };

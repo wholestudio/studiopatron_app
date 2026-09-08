@@ -1,8 +1,8 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { getServiceBySlug, getServices } from "@/features/services/api";
-import { queryKeys } from "@/lib/query/keys";
-import type { ListQuery } from "@/types/api";
+import { queryKeys } from "@/infra/query/keys";
+import type { ListQuery } from "@/shared/types/api";
 
 export function servicesQueryOptions(query?: ListQuery) {
   return queryOptions({

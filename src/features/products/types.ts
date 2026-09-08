@@ -1,4 +1,4 @@
-import type { Product } from "@/types/commerce";
+import type { Product } from "@/shared/types/commerce";
 
 export type ProductListPageModel = {
   products: Product[];

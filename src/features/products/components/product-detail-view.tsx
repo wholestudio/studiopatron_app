@@ -1,5 +1,5 @@
-import { Gallery } from "@/components/gallery";
-import { EmptyState } from "@/components/ui/empty-state";
+import { Gallery } from "@/shared/components/gallery";
+import { EmptyState } from "@/shared/components/ui/empty-state";
 
 import type { ProductDetailPageModel } from "../types";
 

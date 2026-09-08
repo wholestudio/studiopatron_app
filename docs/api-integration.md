@@ -1,7 +1,7 @@
 # API integration protocol (mandatory)
 
 **Status:** Canonical, non-negotiable data path for Studio Patron.  
-**Companion:** [architecture.md](./architecture.md)
+**Architecture V1 companions:** [03 Data / infra](./architecture/03-application-data-infra-protocol.md) · [02 Feature protocol](./architecture/02-feature-domain-protocol.md) · [01 Overview](./architecture/01-architecture-overview.md)
 
 Every production-facing feature that talks to the backend **must** follow this flow. Layers must not be skipped or inverted.
 
@@ -23,14 +23,14 @@ services/
         ↓
 api/
   Transport only: getXxx, createXxx, updateXxx, deleteXxx.
-  Calls publicApi / customerApi only.
+  Calls infra publicApi / customerApi only.
         ↓
 DTO / model
   Request and response shapes exchanged with the backend
-  (feature types.ts and/or src/types/*).
+  (feature types.ts and/or shared/types/*).
         ↓
 httpClient
-  All HTTP goes through apiRequest / httpClient.
+  All HTTP goes through apiRequest / infra/api/httpClient.
   No ad-hoc fetch outside this client.
         ↓
 env
@@ -86,12 +86,12 @@ Use for live filters, cart, forms, refetch, mutations. Client code still must no
 | Layer | Responsibility | May use | Must not |
 | --- | --- | --- | --- |
 | Page / UI | Render props / view-models; capture interaction | Feature components, shared UI, services (RSC only) or hooks (client) | `fetch`, `apiRequest`, `publicApi`, `customerApi`, business math |
-| hooks / `queries.ts` | Cache, loading, error, mutations | `services/`, `lib/query` keys | Call `api.ts` or HTTP clients; build URLs |
+| hooks / `queries.ts` | Cache, loading, error, mutations | `services/`, `infra/query` keys | Call `api.ts` or HTTP clients; build URLs |
 | `services.ts` | Orchestration; DTO → view-model; normalize empty/unavailable | `api/`, DTO / view-model types | React, JSX, HTTP clients directly |
 | `api.ts` | Transport | `publicApi` / `customerApi`, endpoints, DTO types | React, empty-state UI logic, view-models |
-| DTO / model | Request/response contracts | Shared `src/types` or feature `types.ts` | UI components |
+| DTO / model | Request/response contracts | `shared/types` or feature `types.ts` | UI components |
 | `httpClient` | Shared HTTP | `getApiUrl()`, errors | Feature UI knowledge |
-| `env` | `NEXT_PUBLIC_API_URL`, site URL, media host | Zod parsing in `config/env.ts` | — |
+| `env` | `NEXT_PUBLIC_API_URL`, site URL, media host | Zod parsing in `infra/config/env.ts` | — |
 
 ---
 
@@ -107,6 +107,7 @@ Do **not**:
 - Compute backend business rules in the frontend (display + light shaping only)
 - Force every RSC page through TanStack Query merely because `queries.ts` exists
 - Introduce a separate `mappers.ts` layer (keep shaping in services)
+- Create one feature per navbar category leaf (kitchen, wardrobe, …)
 
 ---
 
@@ -115,14 +116,38 @@ Do **not**:
 | Variable / helper | Role |
 | --- | --- |
 | `NEXT_PUBLIC_API_URL` | Backend origin (no trailing slash) |
-| `getApiUrl()` | Resolved in `config/env.ts`; used only inside `httpClient` |
+| `getApiUrl()` | Resolved in `infra/config/env.ts`; used only inside `httpClient` |
 | Missing URL | `ApiConfigError` — services normalize to unavailable/empty for UI |
 
-Feature `api.ts` uses path helpers from `lib/api/endpoints.ts`, never absolute backend hosts.
+Feature `api.ts` uses path helpers from `infra/api/endpoints.ts`, never absolute backend hosts.
 
 ---
 
-## 6. Error and availability handling
+## 6. HTTP stack location (Architecture V1)
+
+```text
+features/<name>/api.ts
+      ↓
+infra/api/publicApi.ts  |  infra/api/customerApi.ts
+      ↓
+infra/api/httpClient.ts  (apiRequest)
+      ↓
+Backend / CMS
+```
+
+| Module | Role |
+| --- | --- |
+| `infra/api/httpClient.ts` | Base URL, headers, query, body, parse, errors |
+| `infra/api/publicApi.ts` | Anonymous catalog/content |
+| `infra/api/customerApi.ts` | Authenticated customer calls |
+| `infra/api/endpoints.ts` | Path helpers |
+| `infra/api/errors.ts` | `ApiError`, `ApiConfigError`, `isApiError` |
+
+`httpClient` must not know business types (`Product`, `DesignIdea`, …).
+
+---
+
+## 7. Error and availability handling
 
 | Concern | Owner |
 | --- | --- |
@@ -134,7 +159,7 @@ UI must not branch on raw status codes or `ApiError` shapes when a view-model ca
 
 ---
 
-## 7. Reference: Products
+## 8. Reference: Products
 
 ```text
 app/(commerce)/products/page.tsx          # thin RSC — no HTTP
@@ -143,11 +168,11 @@ features/products/services.ts             # getProductListPage (orchestrate + sh
         ↓
 features/products/api.ts                  # getProducts → publicApi
         ↓
-types (Product, PaginatedResponse)        # DTO / model
+shared/types (Product, PaginatedResponse) # DTO / model
         ↓
-lib/api/public.ts → httpClient.ts         # apiRequest
+infra/api/publicApi.ts → httpClient.ts    # apiRequest
         ↓
-config/env.ts                             # getApiUrl()
+infra/config/env.ts                       # getApiUrl()
         ↓
 spcms_backend
 ```
@@ -164,19 +189,21 @@ Import stable contracts from `@/features/products` only.
 
 ---
 
-## 8. Checklist — wiring a new endpoint
+## 9. Checklist — wiring a new endpoint
 
-1. Confirm/add DTO types (`src/types` or feature `types.ts`).
+1. Confirm/add DTO types (`shared/types` or feature `types.ts`).
 2. Add transport function in `features/<name>/api.ts` via `publicApi` / `customerApi`.
 3. Add service function that orchestrates, shapes the view-model, and returns page state.
 4. **Server page:** `await` the service in the RSC page.
 5. **Client interaction:** add `queryOptions` / hook that calls the **service**, not `api.ts`.
 6. Export only stable symbols from `features/<name>/index.ts`.
-7. Register the page in `config/page-registry.ts` if it is a new route.
+7. Register the **page kind** in `infra/config/page-registry.ts` if it is a new route pattern (not every CMS category slug).
 
 ---
 
-## 9. Related docs
+## 10. Related docs
 
-- [architecture.md](./architecture.md) — overall system, page registry, config-driven rules
+- [architecture/03-application-data-infra-protocol.md](./architecture/03-application-data-infra-protocol.md) — routing, Page Registry, auth, RSC rules
+- [architecture/02-feature-domain-protocol.md](./architecture/02-feature-domain-protocol.md) — feature ownership, category ≠ feature
+- [architecture/01-architecture-overview.md](./architecture/01-architecture-overview.md) — five areas
 - Root [README.md](../README.md) — setup and env vars
