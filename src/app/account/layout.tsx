@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { AccountShell } from "@/components/layout/account-shell";
-import { Container } from "@/components/ui/container";
+import { AccountShell } from "@/shared/components/layout/account-shell";
+import { Container } from "@/shared/components/ui/container";
 
 export default function AccountLayout({ children }: { children: ReactNode }) {
   return (

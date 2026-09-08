@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { RegisterForm } from "@/app/register/register-form";
-import { PageHeader } from "@/components/layout/page-header";
-import { Container } from "@/components/ui/container";
-import { routes } from "@/constants/routes";
-import { createPageMetadata } from "@/lib/seo";
+import { PageHeader } from "@/shared/components/layout/page-header";
+import { Container } from "@/shared/components/ui/container";
+import { routes } from "@/shared/constants/routes";
+import { createPageMetadata } from "@/infra/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Create account",

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { parseEnv } from "@/config/env";
+import { parseEnv } from "@/infra/config/env";
 
 describe("parseEnv", () => {
   it("uses local defaults when optional values are empty", () => {

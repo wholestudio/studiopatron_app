@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { queryKeys } from "@/lib/query/keys";
-import { toCanonicalUrl } from "@/lib/seo/canonical";
-import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/json-ld";
-import { loginSchema } from "@/lib/validation/auth";
-import { cn } from "@/lib/utils";
-import { isProtectedPath } from "@/lib/auth/guards";
-import { analyticsEvents } from "@/lib/analytics/events";
+import { queryKeys } from "@/infra/query/keys";
+import { toCanonicalUrl } from "@/infra/seo/canonical";
+import { breadcrumbJsonLd, productJsonLd } from "@/infra/seo/json-ld";
+import { loginSchema } from "@/infra/validation/auth";
+import { cn } from "@/shared/utils";
+import { isProtectedPath } from "@/infra/auth/guards";
+import { analyticsEvents } from "@/infra/analytics/events";
 
 describe("query keys", () => {
   it("keeps product detail keys stable", () => {

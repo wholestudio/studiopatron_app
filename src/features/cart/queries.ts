@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { localCartRepository } from "@/features/cart/repository";
-import { queryKeys } from "@/lib/query/keys";
+import { queryKeys } from "@/infra/query/keys";
 
 export function cartQueryOptions() {
   return queryOptions({

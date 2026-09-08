@@ -2,9 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Form, FormActions, FormField } from "@/components/forms";
-import { Button } from "@/components/ui/button";
-import { registerSchema, type RegisterInput } from "@/lib/validation/auth";
+import { Form, FormActions, FormField } from "@/shared/components/forms";
+import { Button } from "@/shared/components/ui/button";
+import { registerSchema, type RegisterInput } from "@/infra/validation/auth";
 
 export function RegisterForm() {
   async function onSubmit() {

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { CalculatorShell } from "@/components/calculator";
-import { CatalogPage } from "@/components/layout/catalog-page";
-import { routes } from "@/constants/routes";
-import { createPageMetadata } from "@/lib/seo";
+import { CalculatorShell } from "@/shared/components/calculator";
+import { CatalogPage } from "@/shared/components/layout/catalog-page";
+import { routes } from "@/shared/constants/routes";
+import { createPageMetadata } from "@/infra/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Price calculator",

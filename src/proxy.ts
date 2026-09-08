@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { getLoginRedirect, getSessionCookieName, isProtectedPath } from "@/lib/auth";
+import { getLoginRedirect, getSessionCookieName, isProtectedPath } from "@/infra/auth";
 
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;

@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { getAddresses, getProfile } from "@/features/account/api";
-import { queryKeys } from "@/lib/query/keys";
+import { queryKeys } from "@/infra/query/keys";
 
 export function profileQueryOptions() {
   return queryOptions({

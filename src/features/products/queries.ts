@@ -1,8 +1,8 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { getProductDetailPage, getProductListPage } from "@/features/products/services";
-import { queryKeys } from "@/lib/query/keys";
-import type { ListQuery } from "@/types/api";
+import { queryKeys } from "@/infra/query/keys";
+import type { ListQuery } from "@/shared/types/api";
 
 /**
  * Client/refetch entry (TanStack Query). Must call services — never api.ts.

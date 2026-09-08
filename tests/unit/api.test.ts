@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { ApiConfigError, ApiError, isApiError } from "@/lib/api/errors";
-import { apiRequest } from "@/lib/api/request";
+import { ApiConfigError, ApiError, isApiError } from "@/infra/api/errors";
+import { apiRequest } from "@/infra/api/request";
 
 describe("api client errors", () => {
   it("identifies ApiError instances", () => {

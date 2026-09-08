@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { CatalogPage } from "@/components/layout/catalog-page";
-import { pages } from "@/config/page-registry";
+import { CatalogPage } from "@/shared/components/layout/catalog-page";
+import { pages } from "@/infra/config/page-registry";
 import { getProductListPage, ProductCatalog } from "@/features/products";
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadata } from "@/infra/seo";
 
 const productsPage = pages.products;
 

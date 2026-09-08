@@ -1,8 +1,8 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { getProjectBySlug, getProjects } from "@/features/projects/api";
-import { queryKeys } from "@/lib/query/keys";
-import type { ListQuery } from "@/types/api";
+import { queryKeys } from "@/infra/query/keys";
+import type { ListQuery } from "@/shared/types/api";
 
 export function projectsQueryOptions(query?: ListQuery) {
   return queryOptions({

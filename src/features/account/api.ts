@@ -1,6 +1,6 @@
-import { customerApi } from "@/lib/api/client";
-import { endpoints } from "@/lib/api/endpoints";
-import type { Address, CustomerProfile } from "@/types/auth";
+import { customerApi } from "@/infra/api/customerApi";
+import { endpoints } from "@/infra/api/endpoints";
+import type { Address, CustomerProfile } from "@/shared/types/auth";
 
 export function getProfile() {
   return customerApi.get<CustomerProfile>(endpoints.customer.profile);

@@ -4,8 +4,6 @@ Customer-facing web application for Studio Patron — interior design, interior 
 
 This repository is the public storefront. It talks to the backend API in `spcms_backend`. The CMS/admin lives in `spcms_frontend`.
 
-This phase establishes routing, design system, SEO, API, auth, analytics, and form architecture. Catalog pages begin wiring through feature services; full CMS content and customer auth are still upcoming.
-
 ## Technologies
 
 - Next.js 16 (App Router)
@@ -22,28 +20,36 @@ This phase establishes routing, design system, SEO, API, auth, analytics, and fo
 
 ## Architecture
 
-Full write-up: **[docs/architecture.md](docs/architecture.md)**.  
-Mandatory API flow: **[docs/api-integration.md](docs/api-integration.md)**  
-(`Page/UI → hooks/queries → services → api → DTO → httpClient → env → Backend`; RSC pages skip hooks and call services directly).
+**Studio Patron Architecture V1** — handbook:
 
-Summary:
+| Doc | Purpose |
+| --- | --- |
+| [docs/architecture/01-architecture-overview.md](docs/architecture/01-architecture-overview.md) | Five areas: `app` / `infra` / `features` / `shared` / root |
+| [docs/architecture/02-feature-domain-protocol.md](docs/architecture/02-feature-domain-protocol.md) | Feature ownership; category ≠ feature |
+| [docs/architecture/03-application-data-infra-protocol.md](docs/architecture/03-application-data-infra-protocol.md) | Request flow, HTTP, Page Registry, RSC rules |
+| [docs/architecture/04-ui-shared-layout-protocol.md](docs/architecture/04-ui-shared-layout-protocol.md) | Shared UI, cards, layout vocabulary |
 
-- **App Router + Server Components by default.** Client Components are used only for navigation, forms, providers, and other interaction.
-- **Page Registry** (`src/config/page-registry.ts`) is the single source of truth for page identity (`id`, path pattern, feature, type). Next.js still owns URL → route; `constants/routes.ts` builds concrete hrefs.
-- **Feature-oriented modules** under `src/features/*` own `api.ts` (transport), `services.ts` (orchestration + view-models), optional `components/`, and `queries.ts` for client refetch. UI does not call `fetch` directly.
-- **HTTP stack:** `feature/api` → `publicApi` / `customerApi` → `httpClient` (`src/lib/api/httpClient.ts`) → backend. Targets `/api/v1/public/*` and `/api/v1/customer/*`.
-- **Products** is the reference feature: thin RSC pages call `getProductListPage` / `getProductDetailPage`, then render feature components.
-- **Config-driven composition** is selective: Page Registry now; section registry/renderer only when CMS homepage/landings need rearrangeable sections. Stable pages like `/products` stay explicit (service → UI).
-- **TanStack Query** is the client server-state layer when interactivity needs it. Local React state is used for UI. Cart persistence is behind a repository interface. Redux is not used.
-- **SEO** is wired through `src/lib/seo`: metadata helpers, canonical URLs, Open Graph, Twitter cards, JSON-LD, `sitemap.ts`, and `robots.ts`.
-- **Images** use `next/image` with configurable remote patterns. Business media is not stored in this repo.
-- **Auth** `src/proxy.ts` protects `/account/*`. The backend session flow is not connected yet.
-- **Analytics** is a provider-agnostic queue in `src/lib/analytics`. No vendor is connected.
-- **Theme tokens** live in `src/theme`. Edit `tokens.css` to restyle the app (`bg-paper`, `text-ink`, `bg-bronze`). Use `src/theme/tokens.ts` in TypeScript (OG images, inline styles).
+Index: [docs/architecture.md](docs/architecture.md)
 
-**Do not add** Indore SPA clones here: `domains/`, `infrastructure/`, CSRF machinery, shell-wrapper trees, permission page registries, dashboard renderers, premature section registries, Bootstrap, or boundary lint before there is a real problem.
+```text
+src/app        → routing
+src/infra      → HTTP, auth, config, seo, query, analytics
+src/features   → business capabilities
+src/shared     → reusable UI, theme, types, constants
+```
 
-Product catalog routes live in `(commerce)/products` (not also in `(marketing)`). Next.js route groups share a URL space, so the same path cannot be registered twice.
+Mandatory data path: `Page/UI → (queries if client) → services → api → DTO → httpClient → env → Backend`.
+
+- **Server Components by default**; Client Components only for real interaction.
+- **Page Registry** (`infra/config/page-registry.ts`) = page identity; Next.js = URL routing.
+- **Features** own api/services/queries/components; nav leaves (kitchen, wardrobe) are categories inside a feature.
+- **HTTP:** `feature/api` → `infra/api/publicApi|customerApi` → `httpClient`.
+- **Products** is the wired reference feature.
+- **Auth** via `infra/auth` + `src/proxy.ts` for `/account/*`.
+
+**Do not add** Indore SPA clones: `domains/`, CSRF machinery, shell-wrapper trees, permission registries, dashboard renderers, premature section registries, Bootstrap, or one feature per navbar item.
+
+Product catalog routes live in `(commerce)/products` (not also in `(marketing)`).
 
 ## Local development
 

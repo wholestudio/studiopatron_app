@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-import { colors } from "@/theme";
+import { colors } from "@/shared/theme";
 
 export const alt = "Studio Patron";
 export const size = { width: 1200, height: 630 };

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
-import { getSiteUrl } from "@/config/env";
-import { routes } from "@/constants/routes";
+import { getSiteUrl } from "@/infra/config/env";
+import { routes } from "@/shared/constants/routes";
 
 const staticPaths = [
   routes.home,
